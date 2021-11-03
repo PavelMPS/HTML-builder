@@ -1,8 +1,8 @@
 const fs=require('fs');
 const path=require('path');
 
-let myReadStream=fs.createReadStream(__dirname + '/text.txt', 'utf-8');
-
+let myReadStream=fs.createReadStream(path.join(__dirname, '/text.txt'), 'utf-8');
 myReadStream.on('data',chunk=>{
-    console.log(path.join(chunk.trim()));
+    console.log(chunk.trim());
+    
 });
