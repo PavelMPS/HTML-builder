@@ -20,5 +20,5 @@ let myWriteStream=fs.createWriteStream(path.join(__dirname,'/text.txt'),'utf-8')
    
   });
   process.on('beforeExit',function(){
-    console.log('До свидания!');
+    console.log('До новых встреч!');
   })

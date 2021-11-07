@@ -16,11 +16,13 @@ fs.readdir(pathCopyFolder,(err,files)=>{
     })
 })
 
-fs.readdir(pathBaseFolder,(err,files)=>{
-    if(err) throw err;
-    files.forEach(file=>{
-        fs.copyFile(path.join(pathBaseFolder,file),path.join(pathCopyFolder,file), function(err){
-            if(err) throw err;
-        } );
-    })  
-})
+setTimeout(()=>{
+    fs.readdir(pathBaseFolder,(err,files)=>{
+        if(err) throw err;
+        files.forEach(file=>{
+            fs.copyFile(path.join(pathBaseFolder,file),path.join(pathCopyFolder,file), function(err){
+                if(err) throw err;
+            } );
+        })  
+    })
+},100)
