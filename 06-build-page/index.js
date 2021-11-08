@@ -75,29 +75,31 @@ fs.readdir(path.join(__dirname, 'styles'),{withFileTypes: true}, (err, files)=>{
 })
 
 //create "index.html"
-
-const myWriteStream=fs.createWriteStream(path.join(__dirname,'project-dist','index.html'));
-
+let arr=[];
+let contentComp='';
 rl.on('line',line=>{
-   
-   if(line.indexOf('{{')>0){
-      line=line.trim();
-      contentName=line.substring(2,line.length-2);
-      const contentReadStream=fs.createReadStream(path.join(__dirname,'components',`${contentName}.html`),'utf-8');
-      contentReadStream.on('data',data=>{
-          fs.appendFile(path.join(__dirname,'project-dist','index.html'),data,err=>{
-              if(err)throw err;
-          })
-      })
-    
-   }else{  myWriteStream.write(line+'\n'); 
-        
-}
+    arr.push(line);
 })
 
+setTimeout(()=>{
+  for(let i=0;i<arr.length;i++){   
+   if(arr[i].indexOf('{{')>0){        
+    let contentName=arr[i].trim();   
+    contentName=contentName.substring(2,contentName.length-2);    
+    const contentReadStream=fs.createReadStream(path.join(__dirname,'components',`${contentName}.html`),'utf-8');    
+    contentReadStream.on('data',data=>{        
+    contentComp=data;
+    arr[i]=contentComp;
+        })   
+      }       
+    }
+ },1000)
 
-
-
-
-
-
+setTimeout(()=>{
+    let arr1='';
+    arr1=arr.join('\n')
+    fs.writeFile(path.join(__dirname,'project-dist','index.html'),arr1,err=>{
+        if(err)throw err;
+    })
+},2000)
+    
